@@ -7,6 +7,20 @@ from django.db import models
 User = get_user_model()
 
 
+class TestDetail(models.Model):
+    test_taker = models.ForeignKey(User, on_delete = models.CASCADE)
+    quiz = models.ForeignKey("Quiz", on_delete = models.CASCADE)
+    start_time = models.DateTimeField(auto_add_now = True)
+    end_time = models.DateTimeField()
+    score = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ["-score"]
+
+    def __str__(self):
+        return f"{self.quiz} : {self.test_taker}"
+
+
 class Quiz(models.Model):
 
     class QuizStatus(models.TextChoices):
@@ -15,11 +29,14 @@ class Quiz(models.Model):
         CONCLUDED = "CNLD", _("concluded")
 
     subject = models.CharField(max_length=100)
-    quiz_master = models.ForeignKey(User, on_delete=models.CASCADE)
-    duration = models.PositiveIntegerField()
-    conducted = models.BooleanField(default=False)
-    date = models.DateTimeField()
+    quiz_master = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "quiz")
+    candidate = models.ManyToManyField(User, through = TestDetail, related_name = 'tests')
+    quiz_duration = models.PositiveIntegerField()
+    created = models.DateTimeField(auto_add_now = True)
+    deadline = models.DateTimeField()
     status = models.CharField(max_length = 4, choices = QuizStatus.choices)
+    pass_mark = models.PositiveIntegerField() # in percentage
+
     def __str__(self):
         return f"{self.quiz_master} : {self.subject}--{self.date}"
 
