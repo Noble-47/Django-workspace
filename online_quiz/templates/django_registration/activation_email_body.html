@@ -1,0 +1,21 @@
+
+<p>
+This mail is for {{ user.first_name }} {{ user.last_name }}
+</p>
+<p>
+    Before using your account. It is important that you
+    confirm your email address. Follow the link below to
+    confirm your email address.
+    <p>
+        click the link to confirm
+        <a href="{{ scheme }}://{{ site.domain }}{% url 'django_registration_activate' activation_key %}"> Confirm Email </a>
+    </p>
+    <p>
+        or paste the following url on your browser
+        <a href=""{{ scheme }}://{{ site.domain }}{% url 'django_registration_activate' activation_key %}"">"{{ scheme }}://{{ site.domain }}{% url 'django_registration_activate' activation_key %}"</a>
+    </p>
+    <br>
+    <p>
+        The activation link would expire in {{ expiration_days }} day{{ expiration_days|pluralize }}
+    </p>
+</p>

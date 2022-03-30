@@ -7,3 +7,6 @@ online_quiz/*/migrations/*.py
 !online_quiz/*/migrations/__init__.py
 db.sqlite3
 media
+
+# Enviroment variables #
+.env

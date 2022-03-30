@@ -16,7 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from accounts.views import profile_view
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('quiz/', admin.site.urls),
+    path("in/<slug:profile_slug>/", profile_view, name="profile"),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("accounts.urls")),
+    path("accounts/", include("django_registration.backends.activation.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("quiz/", include("quizApp.urls")),
 ]

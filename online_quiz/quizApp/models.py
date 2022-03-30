@@ -10,7 +10,7 @@ User = get_user_model()
 class TestDetail(models.Model):
     test_taker = models.ForeignKey(User, on_delete = models.CASCADE)
     quiz = models.ForeignKey("Quiz", on_delete = models.CASCADE)
-    start_time = models.DateTimeField(auto_add_now = True)
+    start_time = models.DateTimeField(auto_now_add = True)
     end_time = models.DateTimeField()
     score = models.PositiveIntegerField()
 
@@ -32,7 +32,7 @@ class Quiz(models.Model):
     quiz_master = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "quiz")
     candidate = models.ManyToManyField(User, through = TestDetail, related_name = 'tests')
     quiz_duration = models.PositiveIntegerField()
-    created = models.DateTimeField(auto_add_now = True)
+    created = models.DateTimeField(auto_now_add = True)
     deadline = models.DateTimeField()
     status = models.CharField(max_length = 4, choices = QuizStatus.choices)
     pass_mark = models.PositiveIntegerField() # in percentage

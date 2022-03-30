@@ -10,10 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from django.urls import reverse_lazy
+from dotenv import load_dotenv
 from pathlib import Path
+
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# load enviroment variables
+load_dotenv(BASE_DIR.parent / ".env")
+
+# Email config
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]
 
 
 # Quick-start development settings - unsuitable for production
@@ -22,10 +36,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-kyb5431g!q4rgy&#tmz5px^$4b-fdotjc2ehhgq*fcasc3vd@0"
 
+AUTH_USER_MODEL = "accounts.User"
+
+
+LOGIN_URL = reverse_lazy("login")
+LOGOUT_URL = reverse_lazy("logout")
+LOGIN_REDIRECT_URL = reverse_lazy("profile_redirect")
+LOGOUT_REDIRECT_URL = reverse_lazy("home")
+
+# django_registration settings
+ACCOUNT_ACTIVATION_DAYS = 3  # 3 days activation window
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.43.61"] # allow testing from another device
 
 
 # Application definition
@@ -38,6 +63,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "quizApp",
+    "accounts",
+    "mailer",
+    "django_registration",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +83,7 @@ ROOT_URLCONF = "online_quiz.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -81,6 +109,10 @@ DATABASES = {
     }
 }
 
+# Email backends
+EMAIL_BACKEND = "mailer.backend.DbBackend"
+MAILER_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = "Quiz Master"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

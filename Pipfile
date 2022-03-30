@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 django = "*"
 black = "*"
+django-registration = "*"
+django-mailer = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
