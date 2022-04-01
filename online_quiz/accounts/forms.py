@@ -8,7 +8,7 @@ from django_registration import validators
 User = get_user_model()
 
 
-class QuizRegistrationForm(RegistrationFormUniqueEmail):
+class RegistrationForm(RegistrationFormUniqueEmail):
     def __init__(self, *args, **kwargs):
         super(QuizRegistrationForm, self).__init__(*args, **kwargs)
         # applys a case insensitive unique validator to username field

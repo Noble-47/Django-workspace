@@ -8,18 +8,20 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.conf import settings
 
-from django_registration.backends.activation.views import RegistrationView
+from django_registration.backends.activation.views import (
+    RegistrationView as BaseRegistrationView,
+)
 
-from .forms import QuizRegistrationForm
+from .forms import RegistrationForm
 
 # Create your views here.
 
 User = get_user_model()
 
 
-class QuizRegistrationView(RegistrationView):
+class RegistrationView(BaseRegistrationView):
 
-    form_class = QuizRegistrationForm
+    form_class = RegistrationForm
     email_body_template = "django_registration/activation_email_body.html"
 
     def create_inactive_user(self, form):
@@ -71,5 +73,12 @@ def profile_redirect_view(request):
 
 
 def profile_view(request, profile_slug):
+    template_name = "accounts/profile.html"
     user = get_object_or_404(User, slug=profile_slug)
-    return render("accounts/profile.html", {"user": user})
+    return render(request, template_name, {"user": user})
+
+    # search for user
+    # user = get_object_or_404(User, pk=pk)
+    # first_name = None, last_name = None
+    # if user.first_name == first_name and user.last_name == last_name:
+    #     return render(reqeust, template_name, {"user" : user})

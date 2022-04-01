@@ -6,15 +6,15 @@ from django_registration.backends.activation.views import RegistrationView
 
 from . import views as account_view
 
-from .forms import QuizRegistrationForm
-from .views import QuizRegistrationView
+# from .forms import RegistrationForm
+from .views import RegistrationView
 
 # app_name = "accounts"
 
 urlpatterns = [
     path(
         "register",
-        QuizRegistrationView.as_view(),
+        RegistrationView.as_view(),
         name="sign_up",
     ),
     path(
