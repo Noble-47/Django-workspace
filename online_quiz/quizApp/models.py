@@ -1,5 +1,5 @@
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
@@ -32,24 +32,12 @@ class TestDetail(models.Model):
             # A candidate can register and take
             # a quiz only once
             models.UniqueConstraint(
-                fields=["quiz", "test_taker"], name="Unique_test_for_quiz_and_candidate"
+                fields=["quiz", "candidate"], name="Unique_test_for_quiz_and_candidate"
             )
         ]
 
-    # def get_all_candidates(quiz):
-    #     if not isinstance(Quiz, quiz):
-    #         # raise error
-    #         raise TypeError(
-    #             """
-    #             quiz must be an instance of Quiz
-    #             model.
-    #             {} not an instance of {}
-    #             """.format(quiz, Quiz)
-    #         )
-    #     if not TestDetail.objects.filter(quiz__id == quiz.id).exists():
-
     def __str__(self):
-        return f"{self.quiz} : {self.test_taker}"
+        return f"{self.quiz} : {self.candidate}"
 
 
 class Quiz(models.Model):
@@ -58,7 +46,7 @@ class Quiz(models.Model):
         SUSPENDED = "SPND", _("suspended")
         CONCLUDED = "CNLD", _("concluded")
 
-    subject = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     quiz_master = models.ForeignKey(User, on_delete=models.CASCADE, related_name="quiz")
     candidate = models.ManyToManyField(User, through=TestDetail, related_name="tests")
     quiz_duration = models.PositiveIntegerField()

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Have a list of both ongoin and concluded quiz -->
+    {% if ongoing_quiz %}
+        <h1>Ongoing Quiz</h1>
+        {% for quiz in ongoing_quiz %}
+            <p>
+                <p>quiz : {{ quiz.title }}</p>
+                <p>quiz master : {{ quiz.quiz_master }}</p>
+                <a href="#"> take quiz </a>
+            </p>
+        {% endfor %}
+    {% else %}
+        <h1>Nothing for now </h1>
+    {% endif %}
+{% endblock %}
