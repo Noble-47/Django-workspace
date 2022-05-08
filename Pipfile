@@ -9,6 +9,7 @@ black = "*"
 django-registration = "*"
 django-mailer = "*"
 python-dotenv = "*"
+django-rest-framework = "*"
 
 [dev-packages]
 

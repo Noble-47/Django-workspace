@@ -50,7 +50,7 @@ ACCOUNT_ACTIVATION_DAYS = 3  # 3 days activation window
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.43.61"]  # allow testing from another device
+ALLOWED_HOSTS = ["192.168.43.61", "127.0.0.1"]  # allow testing from another device
 
 
 # Application definition
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "quizApp",
     "accounts",
     "mailer",

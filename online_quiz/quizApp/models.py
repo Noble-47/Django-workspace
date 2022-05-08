@@ -37,7 +37,7 @@ class TestDetail(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.quiz} : {self.candidate}"
+        return f"{self.candidate} : {self.quiz}"
 
 
 class Quiz(models.Model):
@@ -63,7 +63,7 @@ class Quiz(models.Model):
         return self.candidate.all()
 
     def __str__(self):
-        return f"{self.quiz_master} : {self.subject}--{self.date}"
+        return f"{self.quiz_master} : {self.title}"
 
 
 class Question(models.Model):
@@ -71,7 +71,7 @@ class Question(models.Model):
     question_text = models.TextField()
 
     def __str__(self):
-        return f"{self.quiz} : {self.question_text}"
+        return f"{self.quiz.title} : {self.question_text}"
 
 
 class Choices(models.Model):
